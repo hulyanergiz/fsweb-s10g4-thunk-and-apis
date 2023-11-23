@@ -4,6 +4,7 @@ import Item from "./components/Item";
 import FavItem from "./components/FavItem";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAnother } from "./actions";
+import { addFav, getFavsFromLocalStorage } from "./actions";
 
 export default function App() {
   const loading = useSelector((depo) => depo.loading);
@@ -11,14 +12,15 @@ export default function App() {
   const favs = useSelector((depo) => depo.favs);
   const dispatch = useDispatch();
   function addToFavs() {
-  }
-
+    dispatch(addFav(current));
+    dispatch(fetchAnother());
   }
 
   const fetchAnotherHandler = () => {
     dispatch(fetchAnother());
   };
   useEffect(() => {
+    dispatch(getFavsFromLocalStorage());
     fetchAnotherHandler();
   }, []);
 
@@ -67,12 +69,13 @@ export default function App() {
 
         <Route path="/favs">
           <div className="flex flex-col gap-3">
-            {favs.length > 0
-              ? favs.map((item) => (
-                <FavItem key={item.key} id={item.key} title={item.activity} />
-              ))
-              : <div className="bg-white p-6 text-center shadow-md">Henüz bir favoriniz yok</div>
-            }
+            {favs.length > 0 ? (
+              favs.map((item, idx) => <FavItem key={idx} title={item} />)
+            ) : (
+              <div className="bg-white p-6 text-center shadow-md">
+                Henüz bir favoriniz yok
+              </div>
+            )}
           </div>
         </Route>
       </Switch>
