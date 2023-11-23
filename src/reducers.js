@@ -30,7 +30,9 @@ export function myReducer(state = initial, action) {
       return newState;
 
     case FAV_REMOVE:
-      return state;
+      const remainingFav = state.favs.filter((fav) => fav !== action.payload);
+      writeFavsToLocalStorage(remainingFav);
+      return { ...state, favs: remainingFav };
 
     case FETCH_SUCCESS:
       return { ...state, loading: false, current: action.payload };
