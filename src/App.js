@@ -3,7 +3,12 @@ import { Switch, Route, NavLink } from "react-router-dom";
 import Item from "./components/Item";
 import FavItem from "./components/FavItem";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnother, getFavsFromLocalStorage, addFav } from "./actions";
+import {
+  fetchAnother,
+  getFavsFromLocalStorage,
+  addFav,
+  removeAllFromFavs,
+} from "./actions";
 
 export default function App() {
   const { loading, current, favs, error } = useSelector((state) => state);
@@ -12,6 +17,9 @@ export default function App() {
   function addToFavs() {
     dispatch(addFav(current));
     dispatch(fetchAnother());
+  }
+  function removeAllFavs() {
+    dispatch(removeAllFromFavs());
   }
   const fetchHandler = () => {
     dispatch(fetchAnother());
@@ -60,6 +68,12 @@ export default function App() {
               className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
             >
               Favorilere ekle
+            </button>
+            <button
+              onClick={removeAllFavs}
+              className="select-none px-4 py-2 bg-red-700 hover:bg-red-600 text-white"
+            >
+              Favorilerin Hepsini Sil
             </button>
           </div>
         </Route>

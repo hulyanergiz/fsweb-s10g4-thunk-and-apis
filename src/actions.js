@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 export const GET_FAVS_FROM_LS = "GET_FAVS_FROM_LS";
+export const REMOVE_ALL_FAVS_FROM_LS = "REMOVE_ALL_FAVS_FROM_LS";
 export const FAV_ADD = "FAV_ADD";
 export const FAV_REMOVE = "FAV_REMOVE";
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
@@ -19,7 +20,10 @@ export const removeFav = (fav) => {
   toast.warn("Favorilerden çıkarıldı");
   return { type: FAV_REMOVE, payload: fav };
 };
-
+export const removeAllFromFavs = (fav) => {
+  toast.warn("Favorilerin hepsi silindi");
+  return { type: REMOVE_ALL_FAVS_FROM_LS, payload: fav };
+};
 const fetchLoading = () => {
   return { type: FETCH_LOADING };
 };
